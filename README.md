@@ -2,15 +2,15 @@
 
 This project explores the capabilities of the Highcharts library based on the following objectives:
 
-1. **Identify if we can create custom graphs**.
-2. **Identify if we can create waterfall charts like in IBCS/SUCCESS Charts**.
-3. **Identify if the bars can have textures (like in IBCS)**.
-4. **Identify if there are prebuilt Chart configuration UI elements**.
-5. **Create a small example app to show graphs**:
-   - Bar Chart
-   - Line Chart
-   - Waterfall Chart (vertical and horizontal)
-   - Pie Chart
+- Identify if we can create custom graphs.
+- Identify if we can create waterfall charts like in IBCS/SUCCESS Charts.
+- Identify if the bars can have textures (like in IBCS).
+- Identify if there are prebuilt Chart configuration UI elements.
+- Create a small example app to show graphs:
+  - Bar Chart
+  - Line Chart
+  - Waterfall Chart (vertical and horizontal)
+  - Pie Chart
 
 ### Prerequisites
 
@@ -42,12 +42,12 @@ This project explores the capabilities of the Highcharts library based on the fo
 
 ## Acknowledgements
 
-#### [Highcharts](https://www.highcharts.com/)
+#### [Highcharts](https://www.highcharts.com/) observations:
 
-- Chart elements (bar, pie pieces, etc.) can have textures - patterns can be added -, please refer to the [pattern fills](https://www.highcharts.com/docs/chart-design-and-style/pattern-fills).
+- **Pattern fills**: Highcharts allows chart elements such as bars and pie pieces to be filled with textures, known as pattern fills. These can enhance the visual appeal of your charts. Refer to the [pattern fills documentation](https://www.highcharts.com/docs/chart-design-and-style/pattern-fills) for more details.
 
-- For almost every Highcharts feature, there are a bunch of events that will unleash a whole set of custom interactions users can take vis-a-vis your charts. Check the [Introduction to Highcharts events](https://www.highcharts.com/blog/tutorials/introduction-to-highcharts-events/).
+- **Interactive events**: Highcharts provides a wide range of events that enable custom interactions with your charts. Explore the [Introduction to Highcharts events](https://www.highcharts.com/blog/tutorials/introduction-to-highcharts-events/) to learn how to leverage these events for dynamic user experiences.
 
-- For advanced custom graphics (e.g., variance arrows) and precise control over your chart's visual elements, the Highcharts.SVGRenderer provides a powerful toolset. Consult the [Highcharts SVGRenderer](https://www.highcharts.com/blog/tutorials/introduction-to-highcharts-events/).
+- **SVG renderer**: For advanced custom graphics and precise control over your chart's visual elements, consider using the Highcharts.SVGRenderer. This toolset empowers you to create intricate designs and customize every aspect of your charts. Learn more about the [Highcharts SVGRenderer](https://www.highcharts.com/blog/tutorials/introduction-to-highcharts-events/) for detailed insights.
 
-- For detailed insights into Highcharts capabilities, please consult the [Highcharts official documentation](https://www.highcharts.com/docs).
+- **Official documentation**: For comprehensive information on Highcharts features, options, and configurations, consult the [Highcharts official documentation](https://www.highcharts.com/docs). It serves as a valuable resource for understanding the library's capabilities and implementing complex charting solutions.
