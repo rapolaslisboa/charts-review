@@ -11,7 +11,7 @@ import { HighchartsVerticalWaterfall } from "./VerticalWaterfall";
 
 export function HighchartsExamples() {
   return (
-    <>
+    <section>
       <h1>Highcharts</h1>
       <div className="chart-container">
         <div className="chart">
@@ -45,6 +45,6 @@ export function HighchartsExamples() {
           <HighchartsPie />
         </div>
       </div>
-    </>
+    </section>
   );
 }

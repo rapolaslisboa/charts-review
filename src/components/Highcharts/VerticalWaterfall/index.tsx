@@ -1,9 +1,45 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { Button } from "@/components/Button";
 import * as Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 
 import HC_more from "highcharts/highcharts-more";
+import { useEffect, useState } from "react";
 HC_more(Highcharts);
+
+const initialData: Highcharts.PointOptionsObject[] = [
+  {
+    y: 25334,
+  },
+  {
+    y: -7840,
+  },
+  {
+    isIntermediateSum: true,
+    dataLabels: {
+      style: {
+        fontWeight: "bold",
+      },
+    },
+  },
+  {
+    y: -11331,
+  },
+  {
+    y: 18,
+  },
+  {
+    y: -1428,
+  },
+  {
+    isSum: true,
+    dataLabels: {
+      style: {
+        fontWeight: "bold",
+      },
+    },
+  },
+];
 
 const options: Highcharts.Options = {
   title: {
@@ -65,39 +101,7 @@ const options: Highcharts.Options = {
       borderWidth: 0,
       borderRadius: 0,
       lineWidth: 1,
-      data: [
-        {
-          y: 25334,
-        },
-        {
-          y: -7840,
-        },
-        {
-          isIntermediateSum: true,
-          dataLabels: {
-            style: {
-              fontWeight: "bold",
-            },
-          },
-        },
-        {
-          y: -11331,
-        },
-        {
-          y: 18,
-        },
-        {
-          y: -1428,
-        },
-        {
-          isSum: true,
-          dataLabels: {
-            style: {
-              fontWeight: "bold",
-            },
-          },
-        },
-      ],
+      data: initialData,
       dataLabels: {
         enabled: true,
         inside: false,
@@ -122,6 +126,60 @@ const options: Highcharts.Options = {
   ],
 };
 
-export function HighchartsVerticalWaterfall() {
-  return <HighchartsReact highcharts={Highcharts} options={options} />;
+export function HighchartsVerticalWaterfall({
+  allowDynamicData = false,
+}: {
+  allowDynamicData?: boolean;
+}) {
+  const [data, setData] =
+    useState<Highcharts.PointOptionsObject[]>(initialData);
+  const [isRunning, setIsRunning] = useState(false);
+
+  useEffect(() => {
+    let interval: number | undefined;
+    if (isRunning) {
+      interval = window.setInterval(() => {
+        const newData = data?.map((point) => {
+          if (point.isSum) return point;
+          if (point) {
+            return {
+              ...point,
+              y: (point.y ?? 0) + Math.floor(Math.random() * 2000 - 1000),
+            };
+          }
+
+          return point;
+        });
+
+        setData(newData);
+      }, 3000);
+    }
+
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [isRunning, data]);
+
+  const handleButtonClick = () => {
+    setIsRunning(!isRunning);
+  };
+
+  const updatedOptions = {
+    ...options,
+    series: [
+      {
+        ...options.series?.[0],
+        data: data,
+      },
+    ],
+  };
+
+  return (
+    <div className="flex-column">
+      <HighchartsReact highcharts={Highcharts} options={updatedOptions} />
+      {allowDynamicData && (
+        <Button isRunning={isRunning} onClick={handleButtonClick} />
+      )}
+    </div>
+  );
 }

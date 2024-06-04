@@ -1,9 +1,38 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Button } from "@/components/Button";
+import { categories } from "@/utils/categories";
+import { formatLabel } from "@/utils/format-label";
 import * as Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 
 import HC_more from "highcharts/highcharts-more";
+import { useEffect, useState } from "react";
 HC_more(Highcharts);
+
+const initialData: Highcharts.PointOptionsObject[] = [
+  {
+    y: 9200,
+    color: "#404040",
+  },
+  {
+    y: 11400,
+  },
+  {
+    y: 1400,
+  },
+  {
+    y: -800,
+  },
+  {
+    y: 1000,
+  },
+  {
+    y: -4100,
+  },
+  {
+    isSum: true,
+    color: "#DE0175",
+  },
+];
 
 const options: Highcharts.Options = {
   title: {
@@ -13,7 +42,7 @@ const options: Highcharts.Options = {
   xAxis: {
     type: "category",
     lineColor: "#c6c6c6",
-    categories: ["iPF 2023", "UE", "sbE", "BV", "aEL", "OPEX", "FCO 2024"],
+    categories,
   },
   yAxis: {
     visible: false,
@@ -31,57 +60,16 @@ const options: Highcharts.Options = {
       borderWidth: 0,
       borderRadius: 0,
       lineWidth: 1,
-      data: [
-        {
-          y: 9200,
-          color: "#404040",
-        },
-        {
-          y: 11400,
-        },
-        {
-          y: 1400,
-        },
-        {
-          y: -800,
-        },
-        {
-          y: 1000,
-        },
-        {
-          y: -4100,
-        },
-        {
-          isSum: true,
-          color: "#DE0175",
-        },
-      ],
+      data: initialData,
       dataLabels: {
         enabled: true,
         inside: false,
         formatter: function () {
-          let formattedValue = "";
           if (typeof this.y === "number") {
-            if (this.y >= 1000) {
-              formattedValue =
-                "+ " +
-                Highcharts.numberFormat(Math.abs(this.y) / 1000, 1) +
-                "k";
-            } else if (this.y <= -1000) {
-              formattedValue =
-                "- " +
-                Highcharts.numberFormat(Math.abs(this.y) / 1000, 1) +
-                "k";
-            }
-
-            // Values lower than 1000
-            else {
-              formattedValue = this.y >= 0 ? "+ " : "- ";
-              formattedValue += Highcharts.numberFormat(Math.abs(this.y), 0);
-            }
+            return formatLabel(this.y);
           }
 
-          return formattedValue;
+          return this.y;
         },
         style: {
           fontWeight: "300",
@@ -96,6 +84,60 @@ const options: Highcharts.Options = {
   },
 };
 
-export function HighchartsHorizontalWaterfall() {
-  return <HighchartsReact highcharts={Highcharts} options={options} />;
+export function HighchartsHorizontalWaterfall({
+  allowDynamicData = false,
+}: {
+  allowDynamicData?: boolean;
+}) {
+  const [data, setData] =
+    useState<Highcharts.PointOptionsObject[]>(initialData);
+  const [isRunning, setIsRunning] = useState(false);
+
+  useEffect(() => {
+    let interval: number | undefined;
+    if (isRunning) {
+      interval = window.setInterval(() => {
+        const newData = data?.map((point) => {
+          if (point.isSum) return point;
+          if (point) {
+            return {
+              ...point,
+              y: (point.y ?? 0) + Math.floor(Math.random() * 2000 - 1000),
+            };
+          }
+
+          return point;
+        });
+
+        setData(newData);
+      }, 3000);
+    }
+
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [isRunning, data]);
+
+  const handleButtonClick = () => {
+    setIsRunning(!isRunning);
+  };
+
+  const updatedOptions = {
+    ...options,
+    series: [
+      {
+        ...options.series?.[0],
+        data: data,
+      },
+    ],
+  };
+
+  return (
+    <div className="flex-column">
+      <HighchartsReact highcharts={Highcharts} options={updatedOptions} />
+      {allowDynamicData && (
+        <Button isRunning={isRunning} onClick={handleButtonClick} />
+      )}
+    </div>
+  );
 }
