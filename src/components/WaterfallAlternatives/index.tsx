@@ -8,9 +8,10 @@ const WaterfallAlternatives = () => {
     <section style={{ marginTop: 100 }}>
       <h1>Waterfall Alternatives</h1>
       <p style={{ marginTop: 25 }}>
-        In this section, we have a comparison between 3 libraries alternatives:
-        ApacheECharts, Plotly and ApexCharts. For each example, you can toggle
-        dynamic data by clicking on the 'Run' button.
+        In this section, we have a comparison between 3 chart libraries
+        alternatives: Apache ECharts, Plotly and ApexCharts. Click on the 'Run'
+        button to see how each library handles dynamic data updates every 3
+        seconds.
       </p>
       <div className="chart-container">
         <div className="chart">

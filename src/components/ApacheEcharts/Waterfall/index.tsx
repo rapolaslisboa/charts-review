@@ -91,7 +91,7 @@ const ApacheEChartsWaterfall = () => {
 
   const options: ReactEChartsProps["option"] = {
     title: {
-      text: "Apache Echarts Waterfall",
+      text: "Apache ECharts Waterfall",
     },
     xAxis: {
       type: "category",
