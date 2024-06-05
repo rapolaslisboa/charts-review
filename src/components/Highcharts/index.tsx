@@ -1,5 +1,6 @@
 import { HighchartsArea } from "./Area";
 import { HighchartsBar } from "./Bar";
+import { HighchartsCustomHorizontalWaterfall } from "./CustomHorizontalWaterfall";
 import { HighchartsHorizontalWaterfall } from "./HorizontalWaterfall";
 import { HighchartsIndicatorComparison } from "./IndicatorComparison";
 import { HighchartsLine } from "./Line";
@@ -14,6 +15,9 @@ export function HighchartsExamples() {
     <section>
       <h1>Highcharts</h1>
       <div className="chart-container">
+        <div className="chart">
+          <HighchartsCustomHorizontalWaterfall />
+        </div>
         <div className="chart">
           <HighchartsHorizontalWaterfall />
         </div>
